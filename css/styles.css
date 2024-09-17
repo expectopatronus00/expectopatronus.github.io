@@ -18,10 +18,11 @@ nav ul {
     display: flex;
     justify-content: center;
     background-color: #444;
+    flex-wrap: wrap; /* 使导航栏在小屏幕上换行 */
 }
 
 nav ul li {
-    margin: 0 1rem;
+    margin: 0.5rem 1rem; /* 调整间距以适应小屏幕 */
 }
 
 nav ul li a {
@@ -59,15 +60,19 @@ footer {
     width: 100%;
     height: 100vh;
     display: flex;
+    flex-direction: column; /* 使内容垂直排列 */
     justify-content: center;
     align-items: center;
     color: white;
     font-size: 2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding: 1rem; /* 增加内边距以适应小屏幕 */
+    box-sizing: border-box; /* 包括内边距在内的盒模型 */
 }
 
 .welcome-text {
     z-index: 1;
+    text-align: center; /* 居中对齐 */
 }
 
 .hover-text {
@@ -257,5 +262,28 @@ article a:hover {
 @keyframes fadeOut {
     to {
         opacity: 0;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    main h2 {
+        font-size: 1.5rem;
+    }
+
+    article h3 {
+        font-size: 1.2rem;
+    }
+
+    .footer-note, .timer {
+        font-size: 0.7rem;
     }
 }
