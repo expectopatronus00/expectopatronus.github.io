@@ -30,8 +30,32 @@ nav ul li a {
     text-decoration: none;
 }
 
-main {
+.content {
+    display: flex;
+    justify-content: space-between;
     padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+main {
+    flex: 3; /* 主内容区域占3份 */
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    border-radius: 10px; /* 圆角 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 阴影 */
+    color: white; /* 文字颜色 */
+}
+
+aside {
+    flex: 1; /* 侧边栏占1份 */
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    border-radius: 10px; /* 圆角 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 阴影 */
+    color: white; /* 文字颜色 */
+    margin-left: 1rem; /* 左边距 */
 }
 
 footer {
@@ -100,13 +124,23 @@ footer {
     opacity: 1;
 }
 
-.welcome-link {
-    color: white;
+.welcome-link, .timer, .footer-note {
+    color: #00FFFF; /* 青白色 */
     text-decoration: none;
+    font-family: 'Courier New', Courier, monospace; /* 科技感字体 */
+    text-transform: uppercase; /* 全部大写 */
+    letter-spacing: 0.1em; /* 字符间距 */
+    font-weight: 300; /* 更细的字体 */
+    animation: breathing 2s ease-in-out infinite; /* 呼吸灯效果 */
 }
 
-.welcome-link:hover {
-    text-decoration: underline;
+@keyframes breathing {
+    0%, 100% {
+        text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF, 0 0 30px #00FFFF, 0 0 40px #00CED1, 0 0 50px #00CED1, 0 0 60px #00CED1, 0 0 70px #00CED1;
+    }
+    50% {
+        text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 15px #00FFFF, 0 0 20px #00CED1, 0 0 25px #00CED1, 0 0 30px #00CED1, 0 0 35px #00CED1;
+    }
 }
 
 header h1 {
@@ -238,27 +272,19 @@ article a:hover {
     z-index: 1;
 }
 
-.progress-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    display: none; /* 初始隐藏 */
-}
-
-.progress-bar {
-    width: 0;
-    height: 100%;
-    background-color: #007BFF;
-}
-
 /* 响应式设计 */
 @media (max-width: 768px) {
     header h1 {
         font-size: 2rem;
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    main, aside {
+        margin: 0;
+        margin-bottom: 1rem;
     }
 
     main {
@@ -283,19 +309,4 @@ article a:hover {
     .full-page-image {
         height: auto;
     }
-}
-
-/* 分页翻转效果 */
-.page-flip {
-    position: absolute;
-    top: 0;
-    width: 3.33%; /* 每个翻页效果的宽度百分比 */
-    height: 100%;
-    background-color: white;
-    transform-origin: left;
-    transform: rotateY(90deg);
-    transition: transform 0.5s ease-in-out;
-    z-index: 2;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 添加阴影以避免竖条 */
-    border-left: 1px solid rgba(0, 0, 0, 0.1); /* 添加边框以避免竖条 */
 }
