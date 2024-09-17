@@ -255,16 +255,6 @@ article a:hover {
     background-color: #007BFF;
 }
 
-.fade-out {
-    animation: fadeOut 3s steps(100, end) forwards; /* 使用逐帧动画 */
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-    }
-}
-
 /* 响应式设计 */
 @media (max-width: 768px) {
     header h1 {
@@ -293,4 +283,19 @@ article a:hover {
     .full-page-image {
         height: auto;
     }
+}
+
+/* 分页翻转效果 */
+.page-flip {
+    position: absolute;
+    top: 0;
+    width: 3.33%; /* 每个翻页效果的宽度百分比 */
+    height: 100%;
+    background-color: white;
+    transform-origin: left;
+    transform: rotateY(90deg);
+    transition: transform 0.5s ease-in-out;
+    z-index: 2;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 添加阴影以避免竖条 */
+    border-left: 1px solid rgba(0, 0, 0, 0.1); /* 添加边框以避免竖条 */
 }

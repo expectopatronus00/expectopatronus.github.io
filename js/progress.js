@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     welcomeLink.addEventListener('click', (e) => {
         e.preventDefault();
         progressContainer.style.display = 'block';
-        overlay.classList.add('fade-out');
         let width = 0;
         const interval = setInterval(() => {
             if (width >= 100) {
@@ -16,7 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 width++;
                 progressBar.style.width = width + '%';
+                createPageFlip(width);
             }
-        }, 30); // 调整此值以改变进度条速度
+        }, 15); // 调整此值以改变进度条速度
     });
+
+    function createPageFlip(width) {
+        const flipWidth = 3.33; // 每个翻页效果的宽度百分比
+        const numFlips = Math.ceil(width / flipWidth);
+        const existingFlips = document.querySelectorAll('.page-flip').length;
+
+        if (numFlips > existingFlips) {
+            const flip = document.createElement('div');
+            flip.classList.add('page-flip');
+            flip.style.left = `${(numFlips - 1) * flipWidth}%`;
+            document.body.appendChild(flip);
+
+            setTimeout(() => {
+                flip.style.transform = 'rotateY(0deg)';
+            }, 10); // 延迟以触发动画
+        }
+    }
 });
