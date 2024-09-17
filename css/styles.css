@@ -36,11 +36,12 @@ main {
 footer {
     text-align: center;
     padding: 1rem 0;
-    background-color: #333;
+    background-color: transparent; /* 使背景透明 */
     color: #fff;
-    position: fixed;
+    position: relative; /* 确保页脚文字浮于图片上方 */
     width: 100%;
     bottom: 0;
+    z-index: 1;
 }
 
 .full-page-image {
@@ -92,4 +93,169 @@ footer {
 
 .hover-text:hover::after {
     opacity: 1;
+}
+
+.welcome-link {
+    color: white;
+    text-decoration: none;
+}
+
+.welcome-link:hover {
+    text-decoration: underline;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+main section {
+    margin-bottom: 2rem;
+}
+
+main h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.5rem;
+}
+
+article {
+    margin-bottom: 1.5rem;
+}
+
+article h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+article p {
+    margin: 0.5rem 0;
+}
+
+article a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+article a:hover {
+    text-decoration: underline;
+}
+
+#search {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.bookmark-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.bookmark-btn:hover {
+    background-color: #0056b3;
+}
+
+#bookmark-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#bookmark-list li {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#bookmark-list a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+#bookmark-list a:hover {
+    text-decoration: underline;
+}
+
+.remove-bookmark-btn {
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+}
+
+.remove-bookmark-btn:hover {
+    background-color: #cc0000;
+}
+
+.bookmark-input {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.bookmark-input input {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.timer {
+    font-size: 0.8rem; /* 字体更小 */
+    color: white;
+    text-align: center;
+    margin-top: 0.5rem;
+    position: relative; /* 使文字浮于图片上方 */
+    z-index: 1;
+}
+
+.footer-text {
+    position: absolute;
+    bottom: 20px; /* 调整位置到页面底部 */
+    width: 100%;
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+.footer-note {
+    font-size: 0.8rem; /* 与计时器字体大小一致 */
+    color: white;
+    text-align: center;
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none; /* 初始隐藏 */
+}
+
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #007BFF;
+}
+
+.fade-out {
+    animation: fadeOut 3s steps(100, end) forwards; /* 使用逐帧动画 */
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
 }
