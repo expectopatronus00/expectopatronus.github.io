@@ -287,3 +287,10 @@ article a:hover {
         font-size: 0.7rem;
     }
 }
+
+/* 图片响应式设计 */
+@media (max-width: 1024px) {
+    .full-page-image {
+        height: auto;
+    }
+}
