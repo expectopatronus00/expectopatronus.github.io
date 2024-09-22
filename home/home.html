@@ -83,6 +83,11 @@
     bottom: 10px;
     left: 10px;
   }
+  .article:hover {
+    transform: scale(1.05); /* 悬停时放大 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 悬停时添加更明显的阴影 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加平滑过渡效果 */
+  }
 </style>
 </head>
 <body>
@@ -94,10 +99,10 @@
 </div>
 
 <div class="content">
-  <div class="article">
-    <h2>文章标题1</h2>
-    <p>这是文章1的内容摘要...</p>
-    <div class="category">分类: 技术</div>
+  <div class="article" onclick="location.href='../post/post1/post1.html'">
+    <h2>Linux 清除历史记录的方式</h2>
+    <p>本文介绍了在Linux中清除历史命令记录的几种方法</p>
+    <div class="category">分类: Linux</div>
   </div>
   <div class="article">
     <h2>文章标题2</h2>
