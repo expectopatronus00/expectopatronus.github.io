@@ -16,7 +16,7 @@
     height: 100%;
     margin: 0;
     font-family: 'FZYaoti', sans-serif;
-    font-size: 14px; /* 调整字体大小 */
+    font-size: calc(12px + 0.5vw); /* 随屏幕大小调整字体 */
     background-color: black; /* 背景全黑 */
     color: white; /* 文字颜色为白色 */
     position: relative; /* 确保背景位于底层 */
@@ -71,24 +71,24 @@
   }
   @media (min-width: 600px) {
     .article {
-      flex: 1 1 calc(50% - 40px); /* 中等屏幕宽度 */
+      flex: 1 1 calc(50% - 40px); /* 平板屏幕宽度 */
     }
   }
   @media (min-width: 900px) {
     .article {
-      flex: 1 1 calc(33.33% - 40px); /* 大屏幕宽度 */
+      flex: 1 1 calc(33.33% - 40px); /* 电脑屏幕宽度 */
     }
   }
   .article h2 {
-    font-size: 24px;
+    font-size: calc(16px + 0.5vw); /* 随屏幕大小调整字体 */
     margin: 0 0 10px 0;
   }
   .article p {
-    font-size: 16px;
+    font-size: calc(12px + 0.5vw); /* 随屏幕大小调整字体 */
     margin: 0;
   }
   .article .category {
-    font-size: 12px;
+    font-size: calc(10px + 0.5vw); /* 随屏幕大小调整字体 */
     color: #ccc;
     position: absolute;
     bottom: 10px;
