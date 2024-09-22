@@ -67,6 +67,17 @@
     opacity: 0;
     transition: opacity 1s ease-in-out;
     position: relative; /* 为了定位分类标识 */
+    flex: 1 1 calc(100% - 40px); /* 默认宽度 */
+  }
+  @media (min-width: 600px) {
+    .article {
+      flex: 1 1 calc(50% - 40px); /* 中等屏幕宽度 */
+    }
+  }
+  @media (min-width: 900px) {
+    .article {
+      flex: 1 1 calc(33.33% - 40px); /* 大屏幕宽度 */
+    }
   }
   .article h2 {
     font-size: 24px;
