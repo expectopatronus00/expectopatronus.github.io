@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>EXPECTOPATRONUS的博客 - 文章列表</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=FZYaoti:wght@400;700&display=swap');
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'FZYaoti', sans-serif;
+    font-size: 14px; /* 调整字体大小 */
+    background-color: black; /* 背景全黑 */
+    color: white; /* 文字颜色为白色 */
+    position: relative; /* 确保背景位于底层 */
+    z-index: 1; /* 确保背景位于底层 */
+    text-align: center; /* 使内容居中 */
+  }
+  .menu {
+    width: 100%;
+    background-color: #333;
+    overflow: hidden;
+    position: relative; /* 为了定位弹出图片 */
+    z-index: 1000; /* 置于最上层 */
+    display: flex;
+    justify-content: flex-start; /* 改为左对齐 */
+    padding: 10px 0; /* 增加内边距 */
+  }
+  .menu a {
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    background-color: #333; /* 背景颜色 */
+    transition: all 0.3s;
+    position: relative;
+    display: inline-block;
+    margin: 0 10px; /* 增加外边距 */
+    border-radius: 4px; /* 添加圆角 */
+  }
+  .menu a:hover {
+    background-color: #666699;
+    color: white;
+    transform: translateY(-2px); /* 悬停时上移 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 悬停时添加阴影 */
+  }
+  .content {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .article {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    position: relative; /* 为了定位分类标识 */
+  }
+  .article h2 {
+    font-size: 24px;
+    margin: 0 0 10px 0;
+  }
+  .article p {
+    font-size: 16px;
+    margin: 0;
+  }
+  .article .category {
+    font-size: 12px;
+    color: #ccc;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="menu">
+  <a href="../index.html">首页</a> <!-- 跳转到上层目录的 index.html -->
+  <a href="http://expectopatronus.xyz:5005/">导航</a> <!-- 导航链接指向指定网址 -->
+  <a href="weixin.jpg" id="contact">联系</a>
+</div>
+
+<div class="content">
+  <div class="article">
+    <h2>文章标题1</h2>
+    <p>这是文章1的内容摘要...</p>
+    <div class="category">分类: 技术</div>
+  </div>
+  <div class="article">
+    <h2>文章标题2</h2>
+    <p>这是文章2的内容摘要...</p>
+    <div class="category">分类: 生活</div>
+  </div>
+  <div class="article">
+    <h2>文章标题3</h2>
+    <p>这是文章3的内容摘要...</p>
+    <div class="category">分类: 技术</div>
+  </div>
+  <div class="article">
+    <h2>文章标题4</h2>
+    <p>这是文章4的内容摘要...</p>
+    <div class="category">分类: 旅行</div>
+  </div>
+  <div class="article">
+    <h2>文章标题5</h2>
+    <p>这是文章5的内容摘要...</p>
+    <div class="category">分类: 技术</div>
+  </div>
+  <div class="article">
+    <h2>文章标题6</h2>
+    <p>这是文章6的内容摘要...</p>
+    <div class="category">分类: 生活</div>
+  </div>
+  <div class="article">
+    <h2>文章标题7</h2>
+    <p>这是文章7的内容摘要...</p>
+    <div class="category">分类: 旅行</div>
+  </div>
+  <div class="article">
+    <h2>文章标题8</h2>
+    <p>这是文章8的内容摘要...</p>
+    <div class="category">分类: 技术</div>
+  </div>
+  <div class="article">
+    <h2>文章标题9</h2>
+    <p>这是文章9的内容摘要...</p>
+    <div class="category">分类: 生活</div>
+  </div>
+  <div class="article">
+    <h2>文章标题10</h2>
+    <p>这是文章10的内容摘要...</p>
+    <div class="category">分类: 技术</div>
+  </div>
+  <div class="article">
+    <h2>文章标题11</h2>
+    <p>这是文章11的内容摘要...</p>
+    <div class="category">分类: 旅行</div>
+  </div>
+  <div class="article">
+    <h2>文章标题12</h2>
+    <p>这是文章12的内容摘要...</p>
+    <div class="category">分类: 技术</div>
+  </div>
+  <div class="article">
+    <h2>文章标题13</h2>
+    <p>这是文章13的内容摘要...</p>
+    <div class="category">分类: 生活</div>
+  </div>
+  <div class="article">
+    <h2>文章标题14</h2>
+    <p>这是文章14的内容摘要...</p>
+    <div class="category">分类: 技术</div>
+  </div>
+  <div class="article">
+    <h2>文章标题15</h2>
+    <p>这是文章15的内容摘要...</p>
+    <div class="category">分类: 旅行</div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const articles = document.querySelectorAll('.article');
+    articles.forEach((article, index) => {
+      // 随机设置宽度和高度
+      const randomWidth = Math.random() * (40 - 20) + 20; // 20% 到 40%
+      const randomHeight = Math.random() * (300 - 150) + 150; // 150px 到 300px
+      article.style.width = `${randomWidth}%`;
+      article.style.height = `${randomHeight}px`;
+
+      setTimeout(() => {
+        article.style.opacity = 1;
+      }, Math.random() * 2000); // 随机延迟显示
+    });
+  });
+</script>
+
+</body>
+</html>

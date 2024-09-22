@@ -1,22 +1,75 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的博客</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/timer.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXPECTOPATRONUS的博客</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=FZYaoti:wght@400;700&display=swap');
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'FZYaoti', sans-serif;
+    font-size: 14px; /* 调整字体大小 */
+  }
+  .bg {
+    /* Full height */
+    height: 100%; 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+  }
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px; /* 调整字体大小 */
+    cursor: pointer; /* 鼠标悬停效果 */
+    transition: color 0.3s; /* 过渡效果 */
+  }
+  .centered:hover {
+    color: yellow; /* 悬停时变色 */
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 12px; /* 调整字体大小 */
+  }
+</style>
 </head>
 <body>
-    <div class="overlay" id="overlay">
-        <img src="images/4.png" alt="全页图片" class="full-page-image">
-        <div class="welcome-text">
-            <a href="home.html" class="welcome-link" id="welcome-link">欢迎来到EXPECTOPATRONUS的博客</a>
-        </div>
-        <div class="footer-text">
-            <div id="timer" class="timer">当前博客已运行 0天 2小时 15分钟 32秒</div>
-            <p class="footer-note">&copy; 2024 EXPECTOPATRONUS的博客. 保留所有权利.</p>
-        </div>
-    </div>
+
+<div class="bg">
+  <div class="centered" onclick="location.href='home/home.html'">
+    欢迎来到EXPECTOPATRONUS的博客
+  </div>
+</div>
+
+<div class="footer" id="footer">
+  博客已运行时间: <span id="time">0</span> 
+</div>
+
+<script>
+  function startTime() {
+    var today = new Date();
+    var blogStartTime = new Date('2024-09-17T22:00:00'); // 这里设置博客开始运行的时间
+    var timeDiff = today.getTime() - blogStartTime.getTime();
+    var seconds = Math.floor((timeDiff / 1000) % 60);
+    var minutes = Math.floor((timeDiff / 1000 / 60) % 60);
+    var hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+    var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    document.getElementById('time').textContent = days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒 ";
+  }
+  setInterval(startTime, 1000);
+</script>
+
 </body>
 </html>
