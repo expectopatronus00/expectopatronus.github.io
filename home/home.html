@@ -56,6 +56,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    position: relative; /* 允许子元素绝对定位 */
+    height: 1500px; /* 增加容器高度，减少重叠 */
   }
   .article {
     background: rgba(255, 255, 255, 0.1);
@@ -65,9 +67,15 @@
     margin: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     opacity: 0;
-    transition: opacity 1s ease-in-out;
-    position: relative; /* 为了定位分类标识 */
-    flex: 1 1 calc(100% - 40px); /* 默认宽度 */
+    transition: opacity 1s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
+    position: absolute; /* 绝对定位 */
+    flex: none; /* 取消flex布局 */
+    z-index: 1; /* 初始层级 */
+  }
+  .article:hover {
+    z-index: 10; /* 悬停时提高层级 */
+    transform: scale(1.05); /* 悬停时放大 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 悬停时添加更明显的阴影 */
   }
   @media (min-width: 600px) {
     .article {
@@ -93,11 +101,6 @@
     position: absolute;
     bottom: 10px;
     left: 10px;
-  }
-  .article:hover {
-    transform: scale(1.05); /* 悬停时放大 */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 悬停时添加更明显的阴影 */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加平滑过渡效果 */
   }
 </style>
 </head>
@@ -190,16 +193,36 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const articles = document.querySelectorAll('.article');
+    const content = document.querySelector('.content');
+    const contentWidth = content.clientWidth;
+    const contentHeight = content.clientHeight;
+
     articles.forEach((article, index) => {
       // 随机设置宽度和高度
-      const randomWidth = Math.random() * (40 - 20) + 20; // 20% 到 40%
-      const randomHeight = Math.random() * (300 - 150) + 150; // 150px 到 300px
+      const randomWidth = Math.random() * (30 - 20) + 20; // 20% 到 30%
+      const randomHeight = Math.random() * (250 - 150) + 150; // 150px 到 250px
       article.style.width = `${randomWidth}%`;
       article.style.height = `${randomHeight}px`;
+
+      // 随机设置位置，增加间距减少重叠
+      const maxLeft = contentWidth - article.clientWidth - 50; // 减少50px的间距
+      const maxTop = contentHeight - article.clientHeight - 50; // 减少50px的间距
+      const randomLeft = Math.random() * maxLeft;
+      const randomTop = Math.random() * maxTop;
+      article.style.left = `${randomLeft}px`;
+      article.style.top = `${randomTop}px`;
 
       setTimeout(() => {
         article.style.opacity = 1;
       }, Math.random() * 2000); // 随机延迟显示
+    });
+
+    // 添加鼠标悬停事件，确保底层模块也能突出显示
+    articles.forEach(article => {
+      article.addEventListener('mouseover', () => {
+        articles.forEach(a => a.style.zIndex = 1); // 重置所有模块的层级
+        article.style.zIndex = 10; // 提高当前悬停模块的层级
+      });
     });
   });
 </script>
