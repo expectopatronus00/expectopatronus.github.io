@@ -10,16 +10,20 @@
     height: 100%;
     margin: 0;
     font-family: 'FZYaoti', sans-serif;
-    font-size: 2vw; /* 使用视口宽度单位 */
+    font-size: 0.2vw; /* 缩小到原来的10% */
+    overflow: hidden; /* 防止流星超出视口 */
   }
   .bg {
-    /* Full height */
-    height: 100%; 
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 100%;
     background-color: black;
+    position: relative;
+  }
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
   }
   .centered {
     position: absolute;
@@ -27,12 +31,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 3vw; /* 使用视口宽度单位 */
-    cursor: pointer; /* 鼠标悬停效果 */
-    transition: color 0.3s; /* 过渡效果 */
+    font-size: 0.3vw; /* 缩小到原来的10% */
+    cursor: pointer;
+    transition: color 0.3s;
   }
   .centered:hover {
-    color: yellow; /* 悬停时变色 */
+    color: yellow;
   }
   .footer {
     position: absolute;
@@ -41,21 +45,30 @@
     color: white;
     text-align: center;
     padding: 10px;
-    font-size: 1.5vw; /* 使用视口宽度单位 */
+    font-size: 0.15vw; /* 缩小到原来的10% */
   }
-  @media (max-width: 600px) {
-    .centered {
-      font-size: 5vw; /* 小屏幕上调整字体大小 */
+  .shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(white, rgba(255, 255, 255, 0));
+    animation: shooting 2s linear infinite;
+  }
+  @keyframes shooting {
+    0% {
+      transform: translate(0, 0) rotate(45deg);
+      opacity: 1;
     }
-    .footer {
-      font-size: 3vw; /* 小屏幕上调整字体大小 */
+    100% {
+      transform: translate(100vw, -100vh) rotate(45deg);
+      opacity: 0;
     }
   }
 </style>
 </head>
 <body>
 
-<div class="bg">
+<div class="bg" id="bg">
   <div class="centered" onclick="location.href='home/home.html'">
     欢迎来到EXPECTOPATRONUS的博客
   </div>
@@ -77,6 +90,31 @@
     document.getElementById('time').textContent = days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒 ";
   }
   setInterval(startTime, 1000);
+
+  function createStar() {
+    var star = document.createElement('div');
+    star.className = 'star';
+    star.style.top = Math.random() * window.innerHeight + 'px';
+    star.style.left = Math.random() * window.innerWidth + 'px';
+    document.getElementById('bg').appendChild(star);
+  }
+
+  function createShootingStar() {
+    var star = document.createElement('div');
+    star.className = 'shooting-star';
+    star.style.top = Math.random() * window.innerHeight + 'px';
+    star.style.left = Math.random() * window.innerWidth + 'px';
+    document.getElementById('bg').appendChild(star);
+    setTimeout(() => {
+      star.remove();
+    }, 2000);
+  }
+
+  for (var i = 0; i < 100; i++) {
+    createStar(); // 创建100颗星星
+  }
+
+  setInterval(createShootingStar, 5000); // 每5秒创建一个流星
 </script>
 
 </body>
