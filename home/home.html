@@ -7,6 +7,7 @@
 <title>EXPECTOPATRONUS的博客 - 文章列表</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=FZYaoti:wght@400;700&display=swap');
+  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
   * {
     margin: 0;
     padding: 0;
@@ -22,33 +23,37 @@
     position: relative; /* 确保背景位于底层 */
     z-index: 1; /* 确保背景位于底层 */
     text-align: center; /* 使内容居中 */
+    cursor: url('../others/link.png'), auto; /* 定制鼠标 */
   }
   .menu {
-    width: 100%;
-    background-color: #333;
+    width: 55%; /* 缩小45% */
+    background-color: rgba(0, 0, 0, 0.8); /* 使菜单栏与背景融为一体 */
     overflow: hidden;
     position: relative; /* 为了定位弹出图片 */
     z-index: 1000; /* 置于最上层 */
     display: flex;
     justify-content: space-between; /* 改为两端对齐 */
     padding: 10px 0; /* 增加内边距 */
-    font-size: calc(10px + 1vw); /* 随屏幕大小调整字体 */
+    font-size: calc(7.8px + 0.277vw); /* 随屏幕大小调整字体，增加到5.5px，增加20% */
+    margin: 0 auto; /* 居中 */
+    border-radius: 10px; /* 添加圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 添加阴影 */
   }
   .menu a {
     color: white;
     text-align: center;
     padding: 14px 20px;
     text-decoration: none;
-    background-color: #333; /* 背景颜色 */
+    background-color: transparent; /* 背景透明 */
     transition: all 0.3s;
     position: relative;
     display: inline-block;
     margin: 0 10px; /* 增加外边距 */
     border-radius: 4px; /* 添加圆角 */
-    font-size: calc(10px + 1vw); /* 随屏幕大小调整字体 */
+    font-size: calc(7.8px + 0.277vw); /* 随屏幕大小调整字体，增加到5.5px，增加20% */
   }
   .menu a:hover {
-    background-color: #666699;
+    background-color: rgba(255, 255, 255, 0.1); /* 悬停时背景颜色 */
     color: white;
     transform: translateY(-2px); /* 悬停时上移 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 悬停时添加阴影 */
@@ -72,28 +77,34 @@
   .search-container {
     display: flex;
     align-items: center;
+    width: calc(100% - 40px); /* 随屏幕大小调整宽度 */
+    max-width: 600px; /* 最大宽度 */
+    margin: 0 auto; /* 居中 */
   }
   .search-container input {
+    flex: 1;
     padding: 10px;
-    font-size: 16px;
-    border: 2px solid #666699;
+    font-size: calc(6.5px + 0.206vw); /* 随屏幕大小调整字体，增加到5.5px */
+    border: none; /* 删除紫色边框 */
     border-radius: 20px 0 0 20px; /* 添加弧度 */
     outline: none;
     color: black;
   }
   .search-container button {
     padding: 10px 20px;
-    font-size: 16px;
-    border: 2px solid #666699;
+    font-size: calc(6.5px + 0.206vw); /* 随屏幕大小调整字体，增加到5.5px */
+    border: none; /* 删除紫色边框 */
     border-left: none;
     border-radius: 0 20px 20px 0; /* 添加弧度 */
-    background-color: #666699;
+    background-color: #333333; /* 改成暗黑颜色 */
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* 增加特效 */
   }
   .search-container button:hover {
-    background-color: #555588;
+    background-color: #555555; /* 悬停时变成更亮的暗黑色 */
+    transform: translateY(-2px); /* 悬停时上移 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 悬停时添加阴影 */
   }
   .content {
     padding: 20px;
@@ -160,13 +171,13 @@
 
 <div class="menu">
   <div>
-    <a href="../index.html">首页</a> <!-- 跳转到上层目录的 index.html -->
-    <a href="http://expectopatronus.xyz:5005/">导航</a> <!-- 导航链接指向指定网址 -->
-    <a href="weixin.jpg" id="contact">联系</a>
+    <a href="../index.html"><i class="fas fa-home"></i> 首页</a> <!-- 跳转到上层目录的 index.html -->
+    <a href="http://expectopatronus.xyz:5005/"><i class="fas fa-compass"></i> 导航</a> <!-- 导航链接指向指定网址 -->
+    <a href="weixin.jpg" id="contact"><i class="fas fa-envelope"></i> 联系</a>
   </div>
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="搜索文章...">
-    <button onclick="searchArticles()">搜索</button>
+    <button onclick="searchArticles()"><i class="fas fa-search"></i> 搜索</button>
   </div>
 </div>
 
@@ -429,11 +440,24 @@
         document.addEventListener('touchend', onTouchEnd);
       });
     });
+
+    // 监听搜索输入框的回车事件
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        searchArticles();
+      }
+    });
   });
 
   function searchArticles() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
     const articles = document.querySelectorAll('.article');
+
+    if (searchInput.trim() === "") {
+      alert("不能输入空白");
+      return;
+    }
 
     articles.forEach(article => {
       const title = article.querySelector('h2').innerText.toLowerCase();
@@ -443,7 +467,7 @@
       if (title.includes(searchInput) || content.includes(searchInput) || category.includes(searchInput)) {
         article.classList.add('highlight');
       } else {
-
+        article.classList.remove('highlight');
       }
     });
   }
