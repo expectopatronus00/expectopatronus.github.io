@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="X-Compatible" content="ie=edge">
 <title>EXPECTOPATRONUS的博客 - 文章列表</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=FZYaoti:wght@400;700&display=swap');
@@ -32,6 +32,7 @@
     display: flex;
     justify-content: space-between; /* 改为两端对齐 */
     padding: 10px 0; /* 增加内边距 */
+    font-size: calc(10px + 1vw); /* 随屏幕大小调整字体 */
   }
   .menu a {
     color: white;
@@ -44,12 +45,29 @@
     display: inline-block;
     margin: 0 10px; /* 增加外边距 */
     border-radius: 4px; /* 添加圆角 */
+    font-size: calc(10px + 1vw); /* 随屏幕大小调整字体 */
   }
   .menu a:hover {
     background-color: #666699;
     color: white;
     transform: translateY(-2px); /* 悬停时上移 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 悬停时添加阴影 */
+  }
+  .menu a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #666699;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+  }
+  .menu a:hover::before {
+    visibility: visible;
+    transform: scaleX(1);
   }
   .search-container {
     display: flex;
@@ -269,6 +287,56 @@
     articles.forEach(article => {
       let isDragging = false;
       let startX, startY, initialX, initialY;
+      let velocityX = 0, velocityY = 0;
+      let lastX, lastY, lastTime;
+
+      function onMouseMove(event) {
+        if (!isDragging) return;
+        const dx = event.clientX - startX;
+        const dy = event.clientY - startY;
+        article.style.left = `${initialX + dx}px`;
+        article.style.top = `${initialY + dy}px`;
+
+        const now = Date.now();
+        const dt = now - lastTime;
+        velocityX = (event.clientX - lastX) / dt;
+        velocityY = (event.clientY - lastY) / dt;
+        lastX = event.clientX;
+        lastY = event.clientY;
+        lastTime = now;
+      }
+
+      function onMouseUp() {
+        isDragging = false;
+        article.style.cursor = 'grab';
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+
+        // 惯性效果
+        const inertiaInterval = setInterval(() => {
+          const currentLeft = parseFloat(article.style.left);
+          const currentTop = parseFloat(article.style.top);
+
+          if (Math.abs(velocityX) < 0.01 && Math.abs(velocityY) < 0.01) {
+            clearInterval(inertiaInterval);
+            return;
+          }
+
+          // 边界检测和反弹效果
+          if (currentLeft + velocityX * 10 < 0 || currentLeft + velocityX * 10 > contentWidth - article.clientWidth) {
+            velocityX = -velocityX * 0.8; // 反弹并减少速度
+          }
+          if (currentTop + velocityY * 10 < 0 || currentTop + velocityY * 10 > contentHeight - article.clientHeight) {
+            velocityY = -velocityY * 0.8; // 反弹并减少速度
+          }
+
+          article.style.left = `${Math.min(Math.max(currentLeft + velocityX * 10, 0), contentWidth - article.clientWidth)}px`;
+          article.style.top = `${Math.min(Math.max(currentTop + velocityY * 10, 0), contentHeight - article.clientHeight)}px`;
+
+          velocityX *= 0.95;
+          velocityY *= 0.95;
+        }, 16);
+      }
 
       article.addEventListener('mousedown', function(e) {
         isDragging = true;
@@ -277,21 +345,9 @@
         startY = e.clientY;
         initialX = article.offsetLeft;
         initialY = article.offsetTop;
-
-        function onMouseMove(event) {
-          if (!isDragging) return;
-          const dx = event.clientX - startX;
-          const dy = event.clientY - startY;
-          article.style.left = `${initialX + dx}px`;
-          article.style.top = `${initialY + dy}px`;
-        }
-
-        function onMouseUp() {
-          isDragging = false;
-          article.style.cursor = 'grab';
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
-        }
+        lastX = startX;
+        lastY = startY;
+        lastTime = Date.now();
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
@@ -308,6 +364,70 @@
           window.location.href = url;
         }
       });
+
+      // 触摸事件处理
+      article.addEventListener('touchstart', function(e) {
+        isDragging = true;
+        article.style.cursor = 'grabbing';
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        initialX = article.offsetLeft;
+        initialY = article.offsetTop;
+        lastX = startX;
+        lastY = startY;
+        lastTime = Date.now();
+
+        function onTouchMove(event) {
+          if (!isDragging) return;
+          const dx = event.touches[0].clientX - startX;
+          const dy = event.touches[0].clientY - startY;
+          article.style.left = `${initialX + dx}px`;
+          article.style.top = `${initialY + dy}px`;
+
+          const now = Date.now();
+          const dt = now - lastTime;
+          velocityX = (event.touches[0].clientX - lastX) / dt;
+          velocityY = (event.touches[0].clientY - lastY) / dt;
+          lastX = event.touches[0].clientX;
+          lastY = event.touches[0].clientY;
+          lastTime = now;
+        }
+
+        function onTouchEnd() {
+          isDragging = false;
+          article.style.cursor = 'grab';
+          document.removeEventListener('touchmove', onTouchMove);
+          document.removeEventListener('touchend', onTouchEnd);
+
+          // 惯性效果
+          const inertiaInterval = setInterval(() => {
+            const currentLeft = parseFloat(article.style.left);
+            const currentTop = parseFloat(article.style.top);
+
+            if (Math.abs(velocityX) < 0.01 && Math.abs(velocityY) < 0.01) {
+              clearInterval(inertiaInterval);
+              return;
+            }
+
+            // 边界检测和反弹效果
+            if (currentLeft + velocityX * 10 < 0 || currentLeft + velocityX * 10 > contentWidth - article.clientWidth) {
+              velocityX = -velocityX * 0.8; // 反弹并减少速度
+            }
+            if (currentTop + velocityY * 10 < 0 || currentTop + velocityY * 10 > contentHeight - article.clientHeight) {
+              velocityY = -velocityY * 0.8; // 反弹并减少速度
+            }
+
+            article.style.left = `${Math.min(Math.max(currentLeft + velocityX * 10, 0), contentWidth - article.clientWidth)}px`;
+            article.style.top = `${Math.min(Math.max(currentTop + velocityY * 10, 0), contentHeight - article.clientHeight)}px`;
+
+            velocityX *= 0.95;
+            velocityY *= 0.95;
+          }, 16);
+        }
+
+        document.addEventListener('touchmove', onTouchMove);
+        document.addEventListener('touchend', onTouchEnd);
+      });
     });
   });
 
@@ -323,7 +443,7 @@
       if (title.includes(searchInput) || content.includes(searchInput) || category.includes(searchInput)) {
         article.classList.add('highlight');
       } else {
-        article.classList.remove('highlight');
+
       }
     });
   }
