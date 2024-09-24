@@ -10,12 +10,12 @@
     height: 100%;
     margin: 0;
     font-family: 'FZYaoti', sans-serif;
-    font-size: 0.2vw; /* 缩小到原来的10% */
+    font-size: 0.4vw; /* 增大到原来的两倍 */
     overflow: hidden; /* 防止流星超出视口 */
+    background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,50,1) 100%);
   }
   .bg {
     height: 100%;
-    background-color: black;
     position: relative;
   }
   .star {
@@ -24,6 +24,15 @@
     height: 2px;
     background: white;
     border-radius: 50%;
+    animation: twinkle 2s infinite ease-in-out;
+  }
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 0.2;
+    }
   }
   .centered {
     position: absolute;
@@ -31,12 +40,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 0.3vw; /* 缩小到原来的10% */
+    font-size: 0.6vw; /* 增大到原来的两倍 */
     cursor: pointer;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
   .centered:hover {
     color: yellow;
+    transform: translate(-50%, -50%) scale(1.1);
   }
   .footer {
     position: absolute;
@@ -45,14 +56,23 @@
     color: white;
     text-align: center;
     padding: 10px;
-    font-size: 0.15vw; /* 缩小到原来的10% */
+    font-size: 0.3vw; /* 增大到原来的两倍 */
+    animation: glow 1.5s infinite alternate;
+  }
+  @keyframes glow {
+    0% {
+      text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white, 0 0 20px white;
+    }
+    100% {
+      text-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow, 0 0 40px yellow;
+    }
   }
   .shooting-star {
     position: absolute;
     width: 2px;
     height: 100px;
     background: linear-gradient(white, rgba(255, 255, 255, 0));
-    animation: shooting 2s linear infinite;
+    animation: shooting 1.5s linear infinite;
   }
   @keyframes shooting {
     0% {
@@ -87,7 +107,7 @@
     var minutes = Math.floor((timeDiff / 1000 / 60) % 60);
     var hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
     var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-    document.getElementById('time').textContent = days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒 ";
+    document.getElementById('time').textContent = `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
   }
   setInterval(startTime, 1000);
 
@@ -96,6 +116,7 @@
     star.className = 'star';
     star.style.top = Math.random() * window.innerHeight + 'px';
     star.style.left = Math.random() * window.innerWidth + 'px';
+    star.style.animationDelay = Math.random() * 2 + 's';
     document.getElementById('bg').appendChild(star);
   }
 
@@ -107,14 +128,14 @@
     document.getElementById('bg').appendChild(star);
     setTimeout(() => {
       star.remove();
-    }, 2000);
+    }, 1500);
   }
 
-  for (var i = 0; i < 100; i++) {
-    createStar(); // 创建100颗星星
+  for (var i = 0; i < 150; i++) { // 增加到150颗星星
+    createStar();
   }
 
-  setInterval(createShootingStar, 5000); // 每5秒创建一个流星
+  setInterval(createShootingStar, 3000); // 每3秒创建一个流星
 </script>
 
 </body>
