@@ -26,19 +26,20 @@
     cursor: url('../others/link.png'), auto; /* 定制鼠标 */
   }
   .menu {
-    width: 55%; /* 缩小45% */
+    width: 100%; /* 占满整个宽度 */
     background-color: rgba(0, 0, 0, 0.8); /* 使菜单栏与背景融为一体 */
     overflow: hidden;
     position: relative; /* 为了定位弹出图片 */
     z-index: 1000; /* 置于最上层 */
     display: flex;
     justify-content: space-between; /* 改为两端对齐 */
+    align-items: center; /* 垂直居中 */
     padding: 10px 0; /* 增加内边距 */
     font-size: calc(7.8px + 0.277vw); /* 随屏幕大小调整字体，增加到5.5px，增加20% */
     margin: 0 auto; /* 居中 */
     border-radius: 10px; /* 添加圆角 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 添加阴影 */
-    flex-wrap: wrap; /* 允许换行 */
+    flex-wrap: nowrap; /* 不允许换行 */
   }
   .menu a {
     color: white;
@@ -171,7 +172,7 @@
 <body>
 
 <div class="menu">
-  <div>
+  <div style="display: flex; align-items: center;">
     <a href="../index.html"><i class="fas fa-home"></i> 首页</a> <!-- 跳转到上层目录的 index.html -->
     <a href="http://expectopatronus.xyz:5005/"><i class="fas fa-compass"></i> 导航</a> <!-- 导航链接指向指定网址 -->
     <a href="weixin.jpg" id="contact"><i class="fas fa-envelope"></i> 联系</a>
