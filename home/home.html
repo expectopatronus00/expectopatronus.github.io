@@ -24,6 +24,8 @@
     z-index: 1; /* 确保背景位于底层 */
     text-align: center; /* 使内容居中 */
     cursor: url('../others/link.png'), auto; /* 定制鼠标 */
+    overscroll-behavior: none;
+    overflow: hidden;
   }
   .menu {
     width: 100%; /* 占满整个宽度 */
@@ -150,11 +152,12 @@
     margin: 0 0 10px 0;
   }
   .article p {
-    font-size: calc(12px + 0.5vw); /* 随屏幕大小调整字体 */
+    font-size: calc(8px + 0.4vw); /* 缩小字体 */
+    font-weight: 300; /* 字体细一点 */
     margin: 0;
   }
   .article .category {
-    font-size: calc(10px + 0.5vw); /* 随屏幕大小调整字体 */
+    font-size: calc(3px + 0.4vw); /* 随屏幕大小调整字体，缩小字体 */
     color: #ccc;
     position: absolute;
     bottom: 10px;
@@ -170,7 +173,6 @@
 </style>
 </head>
 <body>
-
 <div class="menu">
   <div style="display: flex; align-items: center;">
     <a href="../index.html"><i class="fas fa-home"></i> 首页</a> <!-- 跳转到上层目录的 index.html -->
@@ -189,20 +191,20 @@
     <p>本文介绍了在Linux中清除历史命令记录的几种方法</p>
     <div class="category">分类: Linux</div>
   </div>
-  <div class="article" data-url="#">
-    <h2>文章标题2</h2>
-    <p>这是文章2的内容摘要...</p>
-    <div class="category">分类: 生活</div>
+  <div class="article" data-url="https://mp.weixin.qq.com/s/4860xE0vO1LDfwQg4u_GBg">
+    <h2>这9款AI工具，免费，超好用！</h2>
+    <p>今天推荐9款AI工具，个人感觉还不错，工具有免费有收费的，看个人选择。所有App下载方法文章末尾提供</p>
+    <div class="category">分类: 工具</div>
   </div>
-  <div class="article" data-url="#">
-    <h2>文章标题3</h2>
-    <p>这是文章3的内容摘要...</p>
-    <div class="category">分类: 技术</div>
+  <div class="article" data-url="https://mp.weixin.qq.com/s/yZugq6OwW6PeGMYEpJNlKg">
+    <h2>如何成为AI时代下的新程序员</h2>
+    <p>随着人工智能（AI）技术的快速发展，AI 正在改变各个行业的工作方式，而程序员在这场技术变革中扮演着重要角色。对于程序员来说，AI 不仅是一个新兴领域，更是一个能够实现职业飞跃的契机。那么，在 AI 时代，程序员需要掌握哪些关键技术才能在竞争中脱颖而出，实现逆袭？</p>
+    <div class="category">分类: AI</div>
   </div>
-  <div class="article" data-url="#">
-    <h2>文章标题4</h2>
-    <p>这是文章4的内容摘要...</p>
-    <div class="category">分类: 旅行</div>
+  <div class="article" data-url="https://mp.weixin.qq.com/s/LQyIVg5EUXwq8wegujQf3w">
+    <h2>推荐279个开箱即用的shell脚本，再也不怕背锅了！（附PDF）</h2>
+    <p>Shell脚本是实现Linux系统管理及自动化运维所必备的重要工具。</p>
+    <div class="category">分类: 工具</div>
   </div>
   <div class="article" data-url="#">
     <h2>文章标题5</h2>
