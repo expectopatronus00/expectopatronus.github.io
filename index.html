@@ -5,96 +5,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EXPECTOPATRONUS的博客</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=FZYaoti:wght@400;700&display=swap');
+  :root {
+    --star-color: white;
+    --twinkle-duration: 2s;
+    --glow-duration: 1.5s;
+    --shooting-duration: 1.5s;
+    --shooting-interval: 5000ms;
+    --bg-color-start: rgba(0,0,0,1);
+    --bg-color-end: rgba(0,0,0,1);
+  }
+  @import url('https://fonts.cdnfonts.com/css/fzyaoti');
   body, html {
     height: 100%;
     margin: 0;
     font-family: 'FZYaoti', sans-serif;
-    font-size: 0.4vw; /* 增大到原来的两倍 */
+    font-size: 1.2vw; /* 增大到原来的两倍 */
     overflow: hidden; /* 防止流星超出视口 */
-    background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,50,1) 100%);
+    background: url('others/farm-background.jpg') no-repeat center center fixed; /* 使用农场背景图像替代渐变 */
+    background-size: cover;
+    cursor: url('others/link.png'), auto; /* 定制鼠标 */
   }
   .bg {
     height: 100%;
     position: relative;
-  }
-  .star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    animation: twinkle 2s infinite ease-in-out;
-  }
-  @keyframes twinkle {
-    0%, 100% {
-      opacity: 0.8;
-    }
-    50% {
-      opacity: 0.2;
-    }
   }
   .centered {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
-    font-size: 0.6vw; /* 增大到原来的两倍 */
+    color: #ffffff; /* 修改字体颜色为白色 */
+    font-size: 1.8vw; /* 增大到原来的两倍 */
     cursor: pointer;
     transition: color 0.3s, transform 0.3s;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 10px rgba(128, 128, 128, 0.5); /* 修改字体阴影颜色为灰色 */
   }
   .centered:hover {
-    color: yellow;
+    color: #ffffff; /* 修改悬停时的颜色为白色 */
     transform: translate(-50%, -50%) scale(1.1);
   }
   .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    color: white;
+    color: #ffffff; /* 修改字体颜色为白色 */
     text-align: center;
     padding: 10px;
-    font-size: 0.3vw; /* 增大到原来的两倍 */
-    animation: glow 1.5s infinite alternate;
+    font-size: 0.9vw; /* 增大到原来的两倍 */
+    animation: glow var(--glow-duration) infinite alternate;
   }
   @keyframes glow {
     0% {
-      text-shadow: 0 0 5px white, 0 0 10px white, 0 0 15px white, 0 0 20px white;
+      text-shadow: 0 0 5px gray, 0 0 10px gray, 0 0 15px gray, 0 0 20px gray; /* 修改动画阴影颜色为灰色 */
     }
     100% {
-      text-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow, 0 0 40px yellow;
+      text-shadow: 0 0 10px gray, 0 0 20px gray, 0 0 30px gray, 0 0 40px gray; /* 修改动画阴影颜色为灰色 */
     }
   }
-  .shooting-star {
-    position: absolute;
-    width: 2px;
-    height: 100px;
-    background: linear-gradient(white, rgba(255, 255, 255, 0));
-    animation: shooting 1.5s linear infinite;
+  @media (max-width: 768px) {
+    body, html {
+      font-size: 2vw;
+    }
+    .centered {
+      font-size: 3vw;
+    }
+    .footer {
+      font-size: 1.5vw;
+    }
   }
-  @keyframes shooting {
-    0% {
-      transform: translate(0, 0) rotate(45deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(100vw, -100vh) rotate(45deg);
-      opacity: 0;
-    }
+  .weather-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 1.2vw;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .weather-bar span {
+    display: inline-block;
+    padding: 0 2vw;
+    animation: scroll 20s linear infinite;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
   }
 </style>
 </head>
 <body>
 
-<div class="bg" id="bg">
-  <div class="centered" onclick="location.href='home/home.html'">
+<div class="weather-bar" id="weather-bar" aria-label="天气信息">
+  <span id="weather-info">加载中...</span>
+</div>
+
+<div class="bg" id="bg" aria-label="背景">
+  <div class="centered" data-action="navigate" aria-label="欢迎信息">
     欢迎来到EXPECTOPATRONUS的博客
   </div>
 </div>
 
-<div class="footer" id="footer">
+<div class="footer" id="footer" aria-label="博客运行时间">
   博客已运行时间: <span id="time">0</span> 
 </div>
 
@@ -111,31 +123,100 @@
   }
   setInterval(startTime, 1000);
 
-  function createStar() {
-    var star = document.createElement('div');
-    star.className = 'star';
-    star.style.top = Math.random() * window.innerHeight + 'px';
-    star.style.left = Math.random() * window.innerWidth + 'px';
-    star.style.animationDelay = Math.random() * 2 + 's';
-    document.getElementById('bg').appendChild(star);
-  }
+  document.addEventListener('DOMContentLoaded', () => {
+    startTime();
+    fetchWeather();
+  });
 
-  function createShootingStar() {
-    var star = document.createElement('div');
-    star.className = 'shooting-star';
-    star.style.top = Math.random() * window.innerHeight + 'px';
-    star.style.left = Math.random() * window.innerWidth + 'px';
-    document.getElementById('bg').appendChild(star);
-    setTimeout(() => {
-      star.remove();
-    }, 1500);
-  }
+  document.addEventListener('click', (event) => {
+    if (event.target.dataset.action === 'navigate') {
+      location.href = 'home/home.html';
+    }
+  });
 
-  for (var i = 0; i < 150; i++) { // 增加到150颗星星
-    createStar();
-  }
+  function fetchWeather() {
+    const cities = [
+      { name: '郑州', code: '410100' },
+      { name: '西安', code: '610100' },
+      { name: '延安', code: '610600' },
+      { name: '北京', code: '110000' },
+      { name: '上海', code: '310000' },
+      { name: '杭州', code: '330100' },
+      { name: '广州', code: '440100' },
+      { name: '深圳', code: '440300' },
+      { name: '成都', code: '510100' },
+      { name: '重庆', code: '500000' },
+      { name: '南京', code: '320100' },
+      { name: '苏州', code: '320500' }
+    ];
+    const apiKey = 'ca520afe34db7ad88e55e1ee6a73b6cf';
+    let weatherInfo = '';
 
-  setInterval(createShootingStar, 3000); // 每3秒创建一个流星
+    cities.forEach(city => {
+      fetch(`https://restapi.amap.com/v3/weather/weatherInfo?key=${apiKey}&city=${city.code}&extensions=base`)
+        .then(response => response.json())
+        .then(data => {
+          const weather = data.lives[0];
+          let weatherIcon = '';
+          switch (weather.weather) {
+            case '多云':
+              weatherIcon = '☁️';
+              break;
+            case '晴':
+              weatherIcon = '☀️';
+              break;
+            case '阴':
+              weatherIcon = '☁️';
+              break;
+            case '小雨':
+              weatherIcon = '🌧️';
+              break;
+            case '中雨':
+              weatherIcon = '🌧️';
+              break;
+            case '大雨':
+              weatherIcon = '🌧️';
+              break;
+            case '暴雨':
+              weatherIcon = '🌧️';
+              break;
+            case '雷阵雨':
+              weatherIcon = '⛈️';
+              break;
+            case '阵雨':
+              weatherIcon = '🌦️';
+              break;
+            case '小雪':
+              weatherIcon = '🌨️';
+              break;
+            case '中雪':
+              weatherIcon = '🌨️';
+              break;
+            case '大雪':
+              weatherIcon = '❄️';
+              break;
+            case '暴雪':
+              weatherIcon = '❄️';
+              break;
+            case '雾':
+              weatherIcon = '🌫️';
+              break;
+            case '霾':
+              weatherIcon = '🌫️';
+              break;
+            case '沙尘暴':
+              weatherIcon = '🌪️';
+              break;
+            // 可以根据需要添加更多天气情况的图标
+            default:
+              weatherIcon = weather.weather;
+          }
+          weatherInfo += `${city.name}: ${weather.temperature}°C ${weatherIcon} | `;
+          document.getElementById('weather-info').textContent = weatherInfo;
+        })
+        .catch(error => console.error('Error fetching weather data:', error));
+    });
+  }
 </script>
 
 </body>
